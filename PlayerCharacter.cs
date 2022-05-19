@@ -34,7 +34,10 @@ namespace IniciandoXUnit
 
         public PlayerCharacter()
         {
-
+            Random random = new Random();
+            this.FirstName = $"PlayCharacter-{random.Next()}";
+            this.experiente = true;
+            CreatingStartingWeapons();
         }
 
         public bool IsNoob()  
