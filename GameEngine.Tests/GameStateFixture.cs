@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Tests
 {
-    public class GameStateFixture
-    {
-        //Todo Sharing Context (video 2:02) >> Continuar treinamento.
+    public class GameStateFixture : IDisposable
+    {   
+        
+        public GameState State { get; private set; }
+
+        public GameStateFixture()
+        {
+            State = new GameState();
+        }
+
+
+        public void Dispose()
+        {
+            Console.WriteLine("Disposed");
+        }
     }
 }

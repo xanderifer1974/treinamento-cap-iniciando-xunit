@@ -1,24 +1,39 @@
 ﻿using IniciandoXUnit;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GameEngine.Tests
 {
-    public class GameStateShoud
+    [Trait("Category", "Teste da Classe GameState")]
+    public class GameStateShoud: IClassFixture<GameStateFixture>
     {
+        private readonly GameStateFixture _gameStatueFixture; 
+        private readonly ITestOutputHelper _output;
+
+        public GameStateShoud(GameStateFixture gameStatueFixture, ITestOutputHelper output)
+        {
+            _gameStatueFixture = gameStatueFixture;
+            _output = output;
+        }
+
+
+
         [Fact]
         public void DamageAllPlayerWhenEarthquake()
         {
-            var sut = new GameState();
+           
+            _output.WriteLine($"GameState ID={_gameStatueFixture.State.Id}");
+
 
             var player1 = new PlayerCharacter();
             var player2 = new PlayerCharacter();
 
-            sut.Players.Add(player1);
-            sut.Players.Add(player2);
+            _gameStatueFixture.State.Players.Add(player1);
+            _gameStatueFixture.State.Players.Add(player2);
 
             var expectedHealthAfterEarthquake = player1.Helth - GameState.EarthquakeDamage;
 
-            sut.Earthquake();
+            _gameStatueFixture.State.Earthquake();
            
             Assert.Equal(expectedHealthAfterEarthquake, player1.Helth);
             Assert.Equal(expectedHealthAfterEarthquake, player2.Helth);
@@ -30,17 +45,17 @@ namespace GameEngine.Tests
         public void Reset()
         {
 
-            var sut = new GameState();
+            _output.WriteLine($"GameState ID={_gameStatueFixture.State.Id}");
 
             var player1 = new PlayerCharacter();
             var player2 = new PlayerCharacter();
 
-            sut.Players.Add(player1);
-            sut.Players.Add(player2);
+            _gameStatueFixture.State.Players.Add(player1);
+            _gameStatueFixture.State.Players.Add(player2);
 
-            sut.Reset();
+            _gameStatueFixture.State.Reset();
 
-            Assert.Empty(sut.Players);  
+            Assert.Empty(_gameStatueFixture.State.Players);  
 
 
         }
